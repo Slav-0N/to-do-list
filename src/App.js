@@ -1,10 +1,7 @@
-// import React from "react";
 import { Component } from "react";
-import Counter from "./Components/Counter/Counter";
-// import * as React from "react";
-// import CssBaseline from "@mui/material/CssBaseline";
-// import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+import DrawerAppBar from "./Components/Header/Header";
+import List from "./Components/List/List";
 
 class App extends Component {
   state = {
@@ -15,7 +12,9 @@ class App extends Component {
     return (
       <div>
         <Container>
-          <Counter />
+          <DrawerAppBar fixed={true} />
+
+          <List />
         </Container>
       </div>
     );

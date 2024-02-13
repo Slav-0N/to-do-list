@@ -11,7 +11,7 @@ export const Value = styled.div`
   /* text-align: center; */
   font-size: 50px;
   font-weight: 900;
-  color: grey
+  color: grey;
   margin: 0 0 0 56px;
 `;
 
