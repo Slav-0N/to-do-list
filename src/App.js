@@ -1,7 +1,8 @@
 import { Component } from "react";
 import Container from "@mui/material/Container";
-import DrawerAppBar from "./Components/Header/Header";
+
 import List from "./Components/List/List";
+import Header from "./Components/Header/Header";
 
 class App extends Component {
   state = {
@@ -12,7 +13,7 @@ class App extends Component {
     return (
       <div>
         <Container>
-          <DrawerAppBar fixed={true} />
+          <Header />
 
           <List />
         </Container>

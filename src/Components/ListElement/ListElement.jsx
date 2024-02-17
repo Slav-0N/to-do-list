@@ -1,11 +1,11 @@
 const ListElement = ({ todo, handleDelete }) => {
-  console.log(todo);
   return (
     <li>
-      <span>{todo.title}</span>
+      <h6>{todo.title}</h6>
+      <span>{todo.description}</span>
       <button
         type="button"
-        class="btn-close"
+        className="btn-close"
         data-bs-dismiss="modal"
         aria-label="Close"
         onClick={() => handleDelete(todo.id)}
