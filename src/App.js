@@ -3,6 +3,7 @@ import Container from "@mui/material/Container";
 
 import List from "./Components/List/List";
 import Header from "./Components/Header/Header";
+import Modal from "./Components/Modal/Modal";
 
 class App extends Component {
   state = {
@@ -14,8 +15,8 @@ class App extends Component {
       <div>
         <Container>
           <Header />
-
           <List />
+          <Modal />
         </Container>
       </div>
     );
