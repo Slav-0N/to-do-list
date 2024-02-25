@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { nanoid } from "nanoid";
+// import { nanoid } from "nanoid";
 const INITIALSTATE = {
   title: "",
   description: "",
@@ -11,7 +11,6 @@ class FormCreateTodo extends Component {
 
   handleChange = ({ target: { value, name } }) => {
     this.setState({ [name]: value });
-    console.log(this.state);
   };
 
   handleSubmit = (e) => {

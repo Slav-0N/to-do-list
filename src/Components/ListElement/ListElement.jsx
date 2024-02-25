@@ -3,6 +3,15 @@
 import { Component } from "react";
 
 class ListElement extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      nextProps.todo.title !== this.props.todo.title ||
+      nextProps.todo.completed !== this.props.todo.completed
+    )
+      return true;
+    return false;
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.todo.completed !== this.props.todo.completed) {
       this.props.updateLocalData();
@@ -10,10 +19,15 @@ class ListElement extends Component {
   }
 
   componentWillUnmount() {
-    alert("щось видалили");
+    // alert("щось видалили");
   }
 
   render() {
+    console.log(
+      "render -->>>",
+      this.props.todo.title,
+      this.props.todo.completed
+    );
     const { todo, handleDelete, handleCheck } = this.props;
     return (
       <li>

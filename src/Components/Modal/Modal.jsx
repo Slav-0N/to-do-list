@@ -1,38 +1,29 @@
 import React, { Component } from "react";
+import { Modal } from "./Modal.styled";
 
-export default class Modal extends Component {
+export default class ModalWindow extends Component {
+  componentDidMount() {
+    document.addEventListener("keydown", this.escCloseModal);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.escCloseModal);
+  }
+
+  escCloseModal = (e) => {
+    if (e.code === "Escape") {
+      this.props.showModal();
+    }
+  };
+
   render() {
     return (
-      <div class="modal" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Modal title</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <p>Modal body text goes here.</p>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" class="btn btn-primary">
-                Save changes
-              </button>
-            </div>
-          </div>
+      <Modal>
+        <div>
+          <button onClick={this.props.showModal}>&times;</button>
+          <p>Це модальне вікно!</p>
         </div>
-      </div>
+      </Modal>
     );
   }
 }
