@@ -10,11 +10,15 @@ class List extends Component {
   state = {
     toDoList: null,
     filter: null,
+    error: "",
   };
 
   componentDidMount() {
-    const url = "https://dummyjson.com/todos";
-    getAllTodo(url).then((data) => console.log(data));
+    getAllTodo()
+      .then((data) =>
+        this.setState({ toDoList: data.todos }, () => console.log(this.state))
+      )
+      .catch((error) => this.setState({ error }));
   }
 
   handleDelete = (id) => {};
@@ -26,26 +30,48 @@ class List extends Component {
   handleCheck = (id) => {};
 
   render() {
+    const {
+      // handleChangeForm,
+      addNewToDo,
+      FilteredList,
+      handleDelete,
+      handleCheck,
+      state: { filter, toDoList, error },
+    } = this;
+    console.log(error);
+
+    const ulStyle = {
+      padding: "0 0 0 0",
+      margin: "0 0 0 0",
+      listStyle: "none",
+    };
+
     return (
       <div className="container">
         <h3> Add new todo</h3>
 
-        {/* <FormCreateTodo
-          handleChangeForm={this.handleChangeForm}
-          addNewToDo={this.addNewToDo}
+        <FormCreateTodo
+          // handleChangeForm={handleChangeForm}
+          addNewToDo={addNewToDo}
         />
-        <FormFilterTodo FilteredList={this.FilteredList} />
-        <ul>
-          {(this.state.filter ?? this.state.toDoList).map((el) => (
-            <ListElement
-              todo={el}
-              key={el.id}
-              handleDelete={this.handleDelete}
-              handleCheck={this.handleCheck}
-              updateLocalData={this.updateLocalData}
-            />
-          ))}
-        </ul> */}
+        <FormFilterTodo FilteredList={FilteredList} />
+        {error && (
+          <>
+            <h1>{error.message}</h1>
+            <p>{error.response.data}</p>
+          </>
+        )}
+        <ul style={ulStyle}>
+          {toDoList &&
+            (filter ?? toDoList).map((el) => (
+              <ListElement
+                todo={el}
+                key={el.id}
+                handleDelete={handleDelete}
+                handleCheck={handleCheck}
+              />
+            ))}
+        </ul>
       </div>
     );
   }
