@@ -11,15 +11,48 @@ class List extends Component {
     toDoList: null,
     filter: null,
     error: "",
+    isLoading: false,
+    showAllTodos: false,
   };
 
-  componentDidMount() {
-    getAllTodo()
-      .then((data) =>
-        this.setState({ toDoList: data.todos }, () => console.log(this.state))
-      )
-      .catch((error) => this.setState({ error }));
+  // componentDidMount() {
+  //   this.setState({ isLoading: true });
+  //   getAllTodo()
+  //     .then((data) =>
+  //       this.setState({ toDoList: data.todos }, () => console.log(this.state))
+  //     )
+  //     .catch((error) => this.setState({ error }))
+  //     .finally(() => this.setState({ isLoading: false }));
+  // }
+
+  componentDidUpdate(_, prevState) {
+    if (prevState.showAllTodos !== this.state.showAllTodos) {
+      this.fetchToDos();
+      //   getAllTodo()
+      //     .then((data) =>
+      //       this.setState({ toDoList: data.todos }, () => console.log(this.state))
+      //     )
+      //     .catch((error) => this.setState({ error }))
+      //     .finally(() => this.setState({ isLoading: false }));
+      // }
+    }
   }
+
+  fetchToDos = async () => {
+    try {
+      this.setState({ isLoading: true });
+      const data = await getAllTodo();
+      this.setState({ toDoList: data.todos });
+    } catch (error) {
+      this.setState({ error });
+    } finally {
+      this.setState({ isLoading: false });
+    }
+  };
+
+  handleGetToDos = () => {
+    this.setState({ showAllTodos: true });
+  };
 
   handleDelete = (id) => {};
 
@@ -36,7 +69,7 @@ class List extends Component {
       FilteredList,
       handleDelete,
       handleCheck,
-      state: { filter, toDoList, error },
+      state: { filter, toDoList, error, isLoading },
     } = this;
     console.log(error);
 
@@ -48,6 +81,8 @@ class List extends Component {
 
     return (
       <div className="container">
+        <button onClick={this.handleGetToDos}>Get all todo`s</button>
+
         <h3> Add new todo</h3>
 
         <FormCreateTodo
@@ -55,6 +90,7 @@ class List extends Component {
           addNewToDo={addNewToDo}
         />
         <FormFilterTodo FilteredList={FilteredList} />
+        {isLoading && <h1>Loading...</h1>}
         {error && (
           <>
             <h1>{error.message}</h1>
